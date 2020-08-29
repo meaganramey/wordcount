@@ -35,7 +35,6 @@ def create_word_dict(filename):
     words = filename.split()
     for i, w in enumerate(words):
         words[i] = w.lower()
-    words.sort()
     for w in words:
         if w not in result:
             result.setdefault(w, 1)
@@ -51,20 +50,27 @@ def print_words(filename):
     with open(filename) as f:
         f_contents = f.read()
     result = create_word_dict(f_contents)
-    for k, v in result.items():
-        print(k, ' : ', v, end='\n')
+    result_sorted = dict(
+        sorted(result.items(), key=lambda x: x[1])
+    )
+    for k, v in result_sorted.items():
+        print(f"{k}: {v}", end='\n')
 
-
-def sorted_value(v):
-    return v[-1]
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
     with open(filename) as f:
         f_contents = f.read()
     result = create_word_dict(f_contents)
-    result.sort(key=sorted_value)
-    return result
+    result_sorted = dict(
+        sorted(result.items(), key=lambda x: x[1], reverse=True))
+    # print(result_sorted)
+    answer = {}
+    for k, v in result_sorted.items():
+        if len(answer) < 20:
+            answer[k] = v
+    for k, v in answer.items():
+        print(f"{k}: {v}", end='\n')
 
 
 # This basic command line argument parsing code is provided and calls
