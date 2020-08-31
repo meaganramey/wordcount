@@ -25,14 +25,16 @@ should return a dictionary with words as keys, and their counts as values.
 
 # Your name, plus anyone who helped you with this assignment
 # Give credit where credit is due.
-__author__ = "Meagan Ramey"
+__author__ = "Meagan Ramey, and Joesph H."
 
 import sys
 
 
 def create_word_dict(filename):
+    with open(filename) as f:
+        f_contents = f.read()
     result = {}
-    words = filename.split()
+    words = f_contents.split()
     for i, w in enumerate(words):
         words[i] = w.lower()
     for w in words:
@@ -47,9 +49,7 @@ def print_words(filename):
     """Prints one per line '<word> : <count>', sorted
     by word for the given file.
     """
-    with open(filename) as f:
-        f_contents = f.read()
-    result = create_word_dict(f_contents)
+    result = create_word_dict(filename)
     result_sorted = dict(
         sorted(result.items(), key=lambda x: x[1])
     )
@@ -59,9 +59,7 @@ def print_words(filename):
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
-    with open(filename) as f:
-        f_contents = f.read()
-    result = create_word_dict(f_contents)
+    result = create_word_dict(filename)
     result_sorted = dict(
         sorted(result.items(), key=lambda x: x[1], reverse=True))
     # print(result_sorted)
