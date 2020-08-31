@@ -25,29 +25,50 @@ should return a dictionary with words as keys, and their counts as values.
 
 # Your name, plus anyone who helped you with this assignment
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = "Meagan Ramey, and Joesph H."
 
 import sys
 
 
 def create_word_dict(filename):
-    """Returns a word/count dict for the given file."""
-    # Your code here
-    return
+    with open(filename) as f:
+        f_contents = f.read()
+    result = {}
+    words = f_contents.split()
+    for i, w in enumerate(words):
+        words[i] = w.lower()
+    for w in words:
+        if w not in result:
+            result.setdefault(w, 1)
+        else:
+            result[w] = result[w] + 1
+    return result
 
 
 def print_words(filename):
     """Prints one per line '<word> : <count>', sorted
     by word for the given file.
     """
-    # Your code here
-    return
+    result = create_word_dict(filename)
+    result_sorted = dict(
+        sorted(result.items(), key=lambda x: x[1])
+    )
+    for k, v in result_sorted.items():
+        print(f"{k}: {v}", end='\n')
 
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
-    # Your code here
-    return
+    result = create_word_dict(filename)
+    result_sorted = dict(
+        sorted(result.items(), key=lambda x: x[1], reverse=True))
+    # print(result_sorted)
+    answer = {}
+    for k, v in result_sorted.items():
+        if len(answer) < 20:
+            answer[k] = v
+    for k, v in answer.items():
+        print(f"{k}: {v}", end='\n')
 
 
 # This basic command line argument parsing code is provided and calls
